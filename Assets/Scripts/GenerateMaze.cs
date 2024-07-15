@@ -9,16 +9,13 @@ using UnityEngine;
 
 public class GenerateMaze : MonoBehaviour
 {
-    [SerializeField]
-    GameObject roomPrefab;
-
+    public GameObject roomPrefab;
+    public GameObject Endpoint;
     // The grid.
     Room[,] rooms = null;
 
-    [SerializeField]
-    int numX = 10;
-    [SerializeField]
-    int numY = 10;
+    public int numX = 10;
+    public int numY = 10;
 
     // The room width and height.
     float roomWidth;
@@ -83,6 +80,7 @@ public class GenerateMaze : MonoBehaviour
                 rooms[i, j].Index = new Vector2Int(i, j);
             }
         }
+        Endpoint.transform.position = new Vector2((numX*roomWidth)-roomWidth,(numY*roomHeight)-roomHeight);
         CreateMaze();
         SetCamera();
     }

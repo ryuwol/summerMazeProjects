@@ -32,9 +32,8 @@ public class Room : MonoBehaviour
   }
 
   public bool visited { get; set; } = false;
-
   Dictionary<Directions, bool> dirflags =
-    new Dictionary<Directions, bool>();
+  new Dictionary<Directions, bool>();
 
   private void Awake()
   {

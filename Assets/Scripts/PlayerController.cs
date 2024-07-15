@@ -20,8 +20,4 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(Leftright, Updown, 0).normalized * speed;
         transform.Translate(movement * Time.deltaTime);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Ãæµ¹");
-    }
 }
