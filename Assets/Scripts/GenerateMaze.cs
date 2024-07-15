@@ -234,9 +234,6 @@ public class GenerateMaze : MonoBehaviour
 
     public void CreateMaze()
     {
-        if (generating) return;
-
-        RemoveRoomWall(0, 0, Room.Directions.BOTTOM);
 
         RemoveRoomWall(numX - 1, numY - 1, Room.Directions.RIGHT);
 

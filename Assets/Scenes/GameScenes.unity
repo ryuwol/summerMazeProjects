@@ -550,8 +550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 964316816940393564, guid: 983c2d97bcb309249bfd84e9e343f581, type: 3}
-  numX: 10
-  numY: 10
+  numX: 20
+  numY: 20
 --- !u!4 &1360456617
 Transform:
   m_ObjectHideFlags: 0
