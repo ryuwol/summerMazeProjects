@@ -5,7 +5,7 @@ using UnityEngine;
 public class StartButton : MonoBehaviour
 {
     public GameObject Popup;
-    void Click()
+    public void Click()
     {
          Popup.SetActive(true);
     }

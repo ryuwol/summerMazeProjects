@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class NubeButton : MonoBehaviour
 {
-    void Click()
+    public void Click()
     {
         GameManager.difiicult = "Nube";
         SceneManager.LoadScene("GameScenes");
