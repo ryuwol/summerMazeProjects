@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Nube
+  - Easy
+  - Nomal
+  - Hard
+  - Hint
+  - Time
+  - Bomb
+  - Score
   layers:
   - Default
   - TransparentFX

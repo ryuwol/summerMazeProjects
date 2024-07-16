@@ -15,8 +15,8 @@ public class GenerateMaze : MonoBehaviour
     // The grid.
     Room[,] rooms = null;
 
-    int numX = GameManager.numX;
-    int numY = GameManager.numY;
+    public int numX;
+    public int numY;
 
     // The room width and height.
     float roomWidth;
@@ -27,7 +27,7 @@ public class GenerateMaze : MonoBehaviour
 
     private void GetRoomSize()
     {
-        SpriteRenderer[] spriteRenderers =
+    SpriteRenderer[] spriteRenderers =
           roomPrefab.GetComponentsInChildren<SpriteRenderer>();
 
         Vector3 minBounds = Vector3.positiveInfinity;
@@ -47,8 +47,11 @@ public class GenerateMaze : MonoBehaviour
         roomHeight = maxBounds.y - minBounds.y;
     }
 
-    private void Awake()
+    private void Start()
     {
+        //numX = GameManager.numX;
+        //numY = GameManager.numY;
+
         GetRoomSize();
 
         rooms = new Room[numX, numY];
@@ -66,9 +69,8 @@ public class GenerateMaze : MonoBehaviour
                 rooms[i, j].Index = new Vector2Int(i, j);
             }
         }
-        Endpoint.transform.position = new Vector2((numX*roomWidth)-roomWidth,(numY*roomHeight)-roomHeight);
+        Endpoint.transform.position = new Vector2((numX*roomWidth),(numY*roomHeight)-roomHeight);
         CreateMaze();
-        //SetCamera();
     }
 
     private void RemoveRoomWall(
