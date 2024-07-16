@@ -11,7 +11,7 @@ public class GenerateMaze : MonoBehaviour
 {
     public GameObject roomPrefab;
     public GameObject Endpoint;
-    GameManager gameManager;
+
     // The grid.
     Room[,] rooms = null;
 
@@ -32,7 +32,6 @@ public class GenerateMaze : MonoBehaviour
 
         Vector3 minBounds = Vector3.positiveInfinity;
         Vector3 maxBounds = Vector3.negativeInfinity;
-
         foreach (SpriteRenderer ren in spriteRenderers)
         {
             minBounds = Vector3.Min(
@@ -50,7 +49,6 @@ public class GenerateMaze : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = GameObject.Find("Gamemanager").GetComponent<GameManager>();
         GetRoomSize();
 
         rooms = new Room[numX, numY];
