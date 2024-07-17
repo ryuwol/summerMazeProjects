@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     Transform playerTransform;
-    public bool PlayerMove;
+    public bool PlayerMove=true;
     void FixedUpdate()
     {
         if (PlayerMove)

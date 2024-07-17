@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -11,7 +12,10 @@ public class GenerateMaze : MonoBehaviour
 {
     public GameObject roomPrefab;
     public GameObject Endpoint;
-
+    public GameObject HintPrefabs;
+    public GameObject ScorePrefabs;
+    public GameObject BombPrefabs;
+    public GameObject TimePrefabs;
     // The grid.
     Room[,] rooms = null;
 
@@ -27,8 +31,8 @@ public class GenerateMaze : MonoBehaviour
 
     private void GetRoomSize()
     {
-    SpriteRenderer[] spriteRenderers =
-          roomPrefab.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] spriteRenderers =
+              roomPrefab.GetComponentsInChildren<SpriteRenderer>();
 
         Vector3 minBounds = Vector3.positiveInfinity;
         Vector3 maxBounds = Vector3.negativeInfinity;
@@ -51,7 +55,9 @@ public class GenerateMaze : MonoBehaviour
     {
         //numX = GameManager.numX;
         //numY = GameManager.numY;
-
+        int Hint = GameManager.HintItem;
+        int Bomb = GameManager.BombItem;
+        int GenPer = GameManager.GenPer;
         GetRoomSize();
 
         rooms = new Room[numX, numY];
@@ -60,16 +66,40 @@ public class GenerateMaze : MonoBehaviour
         {
             for (int j = 0; j < numY; ++j)
             {
-                GameObject room = Instantiate(roomPrefab,
-                  new Vector3(i * roomWidth, j * roomHeight, 0.0f),
-                  Quaternion.identity);
-
+                GameObject room = Instantiate(roomPrefab, new Vector3(i * roomWidth, j * roomHeight, 0.0f), Quaternion.identity);
                 room.name = "Room_" + i.ToString() + "_" + j.ToString();
                 rooms[i, j] = room.GetComponent<Room>();
                 rooms[i, j].Index = new Vector2Int(i, j);
+                if (UnityEngine.Random.Range(0, GenPer) == 0)
+                {
+
+                    switch (UnityEngine.Random.Range(0, 4))
+                    {
+                        case 0:
+                            if (Hint > 0)
+                            {
+                                GameObject HintItem = Instantiate(HintPrefabs, new Vector3(i * roomWidth, j * roomHeight, 0.0f), Quaternion.identity);
+                                Hint--;
+                            }
+                            break;
+                        case 1:
+                            GameObject ScoreItem = Instantiate(ScorePrefabs, new Vector3(i * roomWidth, j * roomHeight, 0.0f), Quaternion.identity);
+                            break;
+                        case 2:
+                            if (Bomb > 0)
+                            {
+                                GameObject BombItem = Instantiate(BombPrefabs, new Vector3(i * roomWidth, j * roomHeight, 0.0f), Quaternion.identity);
+                                Bomb--;
+                            }
+                            break;
+                        case 3:
+                            GameObject TimeItem = Instantiate(TimePrefabs, new Vector3(i * roomWidth, j * roomHeight, 0.0f), Quaternion.identity);
+                            break;
+                    }
+                }
             }
         }
-        Endpoint.transform.position = new Vector2((numX*roomWidth),(numY*roomHeight)-roomHeight);
+        Endpoint.transform.position = new Vector2((numX * roomWidth), (numY * roomHeight) - roomHeight);
         CreateMaze();
     }
 
