@@ -59,6 +59,7 @@ MonoBehaviour:
   bottomWall: {fileID: 8017387904026462621}
   leftWall: {fileID: 7893840743941246153}
   floor: {fileID: 1302440778609073203}
+  Node: {fileID: 0}
 --- !u!1 &1302440778609073203
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,8 @@ public class PlayerInteraction : MonoBehaviour
             case "Score":
                 collision.gameObject.SetActive(false);
                 gameManager.ScoreUp();
+                AudioSource CoinSound = GetComponent<AudioSource>();
+                CoinSound.Play();
                 break;
             case "Time":
                 collision.gameObject.SetActive(false);

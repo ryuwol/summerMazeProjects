@@ -55,8 +55,8 @@ public class GenerateMaze : MonoBehaviour
 
     private void Start()
     {
-        //numX = GameManager.numX;
-        //numY = GameManager.numY;
+        numX = GameManager.numX;
+        numY = GameManager.numY;
         int Hint = 4;//GameManager.HintItem;
         int Bomb = GameManager.BombItem;
         int GenPer = GameManager.GenPer;
@@ -74,7 +74,6 @@ public class GenerateMaze : MonoBehaviour
                 rooms[i, j].Index = new Vector2Int(i, j);
                 if (UnityEngine.Random.Range(0, GenPer) == 0)
                 {
-
                     switch (UnityEngine.Random.Range(0, 4))
                     {
                         case 0:
@@ -283,7 +282,6 @@ public class GenerateMaze : MonoBehaviour
         var hostCell = new BFSCell { x = x, y = y, prev = null };
         visited[x, y] = hostCell;
         cellList.Enqueue(hostCell);
-        // Debug.Log("Test : " + visited[11, 11].x);
 
         int[] dirX = new int[] { 1, -1, 0, 0 };
         int[] dirZ = new int[] { 0, 0, 1, -1 };
@@ -354,7 +352,6 @@ public class GenerateMaze : MonoBehaviour
         var path = GetShortestDistance(x, y);
         foreach (var room in path)
         {
-            Debug.Log("Show");
             room.ShowFloor();
         }
         yield return new WaitForSeconds(3.0f);
