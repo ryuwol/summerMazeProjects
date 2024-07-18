@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class GenerateMaze : MonoBehaviour
 {
+    public Room room;
+    public static GenerateMaze Instance { get; private set; }
     public GameObject roomPrefab;
     public GameObject Endpoint;
     public GameObject HintPrefabs;
@@ -55,7 +57,7 @@ public class GenerateMaze : MonoBehaviour
     {
         //numX = GameManager.numX;
         //numY = GameManager.numY;
-        int Hint = GameManager.HintItem;
+        int Hint = 4;//GameManager.HintItem;
         int Bomb = GameManager.BombItem;
         int GenPer = GameManager.GenPer;
         GetRoomSize();
@@ -264,6 +266,101 @@ public class GenerateMaze : MonoBehaviour
         while (!flag)
         {
             flag = GenerateStep();
+        }
+    }
+    class BFSCell
+    {
+        public int x;
+        public int y;
+        public BFSCell prev;
+    }
+    public Room[] GetShortestDistance(int x, int y)
+    {
+        int mazeSize = numX;
+        BFSCell[,] visited = new BFSCell[mazeSize, mazeSize];
+        Queue<BFSCell> cellList = new();
+
+        var hostCell = new BFSCell { x = x, y = y, prev = null };
+        visited[x, y] = hostCell;
+        cellList.Enqueue(hostCell);
+        // Debug.Log("Test : " + visited[11, 11].x);
+
+        int[] dirX = new int[] { 1, -1, 0, 0 };
+        int[] dirZ = new int[] { 0, 0, 1, -1 };
+
+        while (cellList.Count != 0)
+        {
+            var cell = cellList.Dequeue();
+            if (cell.x == mazeSize - 1 && cell.y == mazeSize - 1)
+            {
+                List<Room> path = new();
+                while (cell != null)
+                {
+                    path.Add(rooms[cell.x, cell.y]);
+                    cell = cell.prev;
+                }
+                return path.ToArray();
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                int nx = cell.x + dirX[i];
+                int nz = cell.y + dirZ[i];
+
+                if (nx < 0 || nx >= mazeSize || nz < 0 || nz >= mazeSize) continue;
+                if (visited[nx, nz] != default) continue;
+                if (CheckWall(rooms[cell.x, cell.y], rooms[nx, nz])) continue;
+
+                var newCell = new BFSCell { x = nx, y = nz, prev = cell };
+                visited[nx, nz] = newCell;
+                cellList.Enqueue(newCell);
+            }
+        }
+
+        return default;
+    }
+    bool CheckWall(Room curr, Room post)
+    {
+        if (curr.transform.position.x < post.transform.position.x)
+        {
+            return curr.rightWall.activeSelf;
+        }
+
+        if (curr.transform.position.x > post.transform.position.x)
+        {
+            return curr.leftWall.activeSelf;
+        }
+
+        if (curr.transform.position.y < post.transform.position.y)
+        {
+            return curr.topWall.activeSelf;
+        }
+
+        if (curr.transform.position.y > post.transform.position.y)
+        {
+            return curr.bottomWall.activeSelf;
+        }
+
+        return false;
+    }
+    public void ShowHint(int x, int y)
+    {
+        x = x / 7;
+        y= y/ 7;
+        StartCoroutine(IEShowHint(x, y));
+    }
+    IEnumerator IEShowHint(int x, int y)
+    {
+        var path = GetShortestDistance(x, y);
+        foreach (var room in path)
+        {
+            Debug.Log("Show");
+            room.ShowFloor();
+        }
+        yield return new WaitForSeconds(3.0f);
+        foreach (var room in path)
+        {
+            room.HideFloor();
         }
     }
 }

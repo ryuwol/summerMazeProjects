@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+    public int MazeSize { get; private set; }
     public static int numX, numY, HintItem, BombItem;
     public static int Score = 0;
     public TextMeshProUGUI TimeText;

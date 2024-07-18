@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    GenerateMaze GenerateMaze;
     GameManager gameManager;
     [SerializeField]
     PlayerController Controller;
@@ -12,6 +13,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.Find("Gamemanager").GetComponent<GameManager>();
+        GenerateMaze = GameObject.Find("GenerateMaze").GetComponent<GenerateMaze>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,17 +32,13 @@ public class PlayerInteraction : MonoBehaviour
                 collision.gameObject.SetActive(false);
                 break;
             case "Hint":
+                GenerateMaze.ShowHint(Mathf.RoundToInt(this.transform.position.x), Mathf.RoundToInt(this.transform.position.y));
                 collision.gameObject.SetActive(false);
-                ShowHint();
                 break;
             case "Finish":
                 SceneManager.LoadScene("MainScenes");
                 break;
         }
-
-    }
-    void ShowHint()
-    {
 
     }
     IEnumerator PlayerBomb()

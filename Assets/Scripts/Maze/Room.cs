@@ -14,14 +14,14 @@ public class Room : MonoBehaviour
   }
 
   [SerializeField]
-  GameObject topWall;
+  public GameObject topWall;
   [SerializeField]
-  GameObject rightWall;
+  public GameObject rightWall;
   [SerializeField]
-  GameObject bottomWall;
+  public GameObject bottomWall;
   [SerializeField]
-  GameObject leftWall;
-
+  public GameObject leftWall;
+    public GameObject floor;
   Dictionary<Directions, GameObject> walls =
     new Dictionary<Directions, GameObject>();
 
@@ -53,4 +53,13 @@ public class Room : MonoBehaviour
     dirflags[dir] = flag;
     SetActive(dir, flag);
   }
+    public void ShowFloor()
+    {
+        floor.SetActive(true);
+    }
+
+    public void HideFloor()
+    {
+        floor.SetActive(false);
+    }
 }
