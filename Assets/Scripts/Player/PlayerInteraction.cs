@@ -38,6 +38,12 @@ public class PlayerInteraction : MonoBehaviour
                 collision.gameObject.SetActive(false);
                 break;
             case "Finish":
+                if (GameManager.highScore <= GameManager.Score)
+                {
+                    GameManager.highScore = GameManager.Score;
+                    GameManager.highTime = GameManager.GameTime;
+                    GameManager.highDiff = GameManager.difiicult;
+                }
                 SceneManager.LoadScene("MainScenes");
                 break;
         }

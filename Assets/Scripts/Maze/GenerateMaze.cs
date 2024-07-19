@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class GenerateMaze : MonoBehaviour
